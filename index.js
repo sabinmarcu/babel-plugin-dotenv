@@ -1,4 +1,5 @@
 var dotEnv = require('dotenv');
+var dotEnvExpand = require('dotenv-expand');
 var fs = require('fs');
 var sysPath = require('path');
 var process = require('process');
@@ -27,7 +28,8 @@ module.exports = function (data) {
                   }
 
                   var config = dotEnv.config({ path: sysPath.join(configDir, configFile), silent: true }) || {};
-                  var config = Object.assign(config, dotEnv.config({ path: sysPath.join(configDir, platformPath), silent: true }));
+                  config = Object.assign(config, dotEnv.config({ path: sysPath.join(configDir, platformPath), silent: true }));
+                  config = dotEnvExpand(config);
 
                   path.node.specifiers.forEach(function(specifier, idx){
                     if (specifier.type === "ImportDefaultSpecifier") {
