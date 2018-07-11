@@ -27,9 +27,14 @@ describe('myself in some tests', function() {
     });
   });
 
-  it('should load default env from .env', function(){
+  it('should load default env from .env', function () {
     var result = babel.transformFileSync('test/fixtures/default/source.js')
     expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'abc123\');\nconsole.log(\'username\');')
+  })
+
+  it('should load default env from .env with expand variables', function () {
+    var result = babel.transformFileSync('test/fixtures/expand-variables/source.js')
+    expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'abc123\');\nconsole.log(\'username\');\nconsole.log(\'abc123:username\');')
   })
 
   it('should load let .env.development overwrite .env', function(){

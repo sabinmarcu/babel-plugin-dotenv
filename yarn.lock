@@ -272,9 +272,9 @@ diff@3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.2.0.tgz#c9ce393a4b7cbd0b058a725c93df299027868ff9"
 
-dotenv-expand@^4.2.0:
+"dotenv-expand@https://github.com/sabinmarcu/dotenv-expand.git":
   version "4.2.0"
-  resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-4.2.0.tgz#def1f1ca5d6059d24a766e587942c21106ce1275"
+  resolved "https://github.com/sabinmarcu/dotenv-expand.git#faf43b865a6411478439da74746c7ea6247d1146"
 
 dotenv@^2.0.0:
   version "2.0.0"

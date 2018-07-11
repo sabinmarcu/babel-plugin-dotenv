@@ -29,7 +29,7 @@ module.exports = function (data) {
 
                   var config = dotEnv.config({ path: sysPath.join(configDir, configFile), silent: true }) || {};
                   config = Object.assign(config, dotEnv.config({ path: sysPath.join(configDir, platformPath), silent: true }));
-                  config = dotEnvExpand(config);
+                  config = dotEnvExpand({ parsed: config }).parsed;
 
                   path.node.specifiers.forEach(function(specifier, idx){
                     if (specifier.type === "ImportDefaultSpecifier") {
