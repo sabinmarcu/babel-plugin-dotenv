@@ -31,6 +31,47 @@ module.exports = function (data) {
                   config = Object.assign(config, dotEnv.config({ path: sysPath.join(configDir, platformPath), silent: true }));
                   config = dotEnvExpand({ parsed: config }).parsed;
 
+                  var _cnf = config, _tmp, _orig = config;
+
+                  if (options.matchPrefix) {
+                    _cnf = Object.keys(_cnf)
+                      .filter(it => it.startsWith(options.matchPrefix))
+                      .reduce((prev, it) => ({
+                        ...prev,
+                        [it]: _cnf[it],
+                      }), {});
+                  }
+
+                  if (options.matchType && options.matchType === 'or') {
+                    _tmp = _cnf;
+                    _cnf = _orig;
+                  }
+
+                  if (options.matchSuffix) {
+                    _cnf = Object.keys(_cnf)
+                      .filter(it => it.endsWith(options.matchSuffix))
+                      .reduce((prev, it) => ({
+                        ...prev,
+                        [it]: _cnf[it],
+                      }), {});
+                  }
+
+                  if (options.matchType && options.matchType === 'or') {
+                    _cnf = {
+                      ..._cnf,
+                      ..._tmp,
+                    };
+                  }
+
+                  config = _cnf;
+
+                  if (options.defaultValues) {
+                    config = {
+                      ...options.defaultValues,
+                      ...config,
+                    };
+                  }
+
                   path.node.specifiers.forEach(function(specifier, idx){
                     if (specifier.type === "ImportDefaultSpecifier") {
                       throw path.get('specifiers')[idx].buildCodeFrameError('Import dotenv as default is not supported.')

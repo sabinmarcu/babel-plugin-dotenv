@@ -1,0 +1,15 @@
+{
+  "plugins": [
+    "babel-plugin-transform-es2015-modules-commonjs",
+    [
+      "../../../",
+      {
+        "replacedModuleName": "babel-dotenv",
+        "defaultValues": {
+          "RC_API_KEY": "defaultValue"
+        },
+        "configDir": "test/fixtures/default-values"
+      }
+    ]
+  ]
+}

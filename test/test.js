@@ -37,6 +37,84 @@ describe('myself in some tests', function() {
     expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'abc123\');\nconsole.log(\'username\');\nconsole.log(\'abc123:username\');')
   })
 
+  it('should load default env from .env with match prefix', function () {
+    var result = babel.transformFileSync('test/fixtures/match-prefix/source.js')
+    expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'abc123\');')
+  })
+
+  it('should load default env from .env with match prefix, and error out', function () {
+    expect(function () {
+      babel.transformFileSync('test/fixtures/match-prefix/source-error.js')
+    }).to.throwException(function (e) {
+      expect(e.message).to.contain("Try to import dotenv variable \"API_KEY\" which is not defined in any .env files.");
+    });
+  })
+
+  it('should load default env from .env with match suffix', function () {
+    var result = babel.transformFileSync('test/fixtures/match-suffix/source.js')
+    expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'abc123\');')
+  })
+
+  it('should load default env from .env with match suffix, and error out', function () {
+    expect(function () {
+      babel.transformFileSync('test/fixtures/match-suffix/source-error.js')
+    }).to.throwException(function (e) {
+      expect(e.message).to.contain("Try to import dotenv variable \"API_KEY\" which is not defined in any .env files.");
+    });
+  })
+
+  it('should load default env from .env with match prefix and suffix', function () {
+    var result = babel.transformFileSync('test/fixtures/match-prefix-and-suffix/source.js')
+    expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'abc123\');')
+  })
+
+  it('should load default env from .env with match prefix and suffix, and error out', function () {
+    expect(function () {
+      babel.transformFileSync('test/fixtures/match-prefix-and-suffix/source-error.js')
+    }).to.throwException(function (e) {
+      expect(e.message).to.contain("Try to import dotenv variable \"API_KEY\" which is not defined in any .env files.");
+    });
+  })
+
+  it('should load default env from .env with match prefix and suffix, and error out with prefix', function () {
+    expect(function () {
+      babel.transformFileSync('test/fixtures/match-prefix-and-suffix/source-error-prefix.js')
+    }).to.throwException(function (e) {
+      expect(e.message).to.contain("Try to import dotenv variable \"RC_API_KEY\" which is not defined in any .env files.");
+    });
+  })
+
+  it('should load default env from .env with match prefix and suffix, and error out with suffix', function () {
+    expect(function () {
+      babel.transformFileSync('test/fixtures/match-prefix-and-suffix/source-error-suffix.js')
+    }).to.throwException(function (e) {
+      expect(e.message).to.contain("Try to import dotenv variable \"API_KEY_ENDPOINT\" which is not defined in any .env files.");
+    });
+  })
+
+  it('should load default env from .env with match prefix or suffix', function () {
+    var result = babel.transformFileSync('test/fixtures/match-prefix-or-suffix/source.js')
+    expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'abc123\');\nconsole.log(\'abc123\');\nconsole.log(\'abc123\');')
+  })
+
+  it('should load default env from .env with match prefix or suffix, or error out', function () {
+    expect(function () {
+      babel.transformFileSync('test/fixtures/match-prefix-or-suffix/source-error.js')
+    }).to.throwException(function (e) {
+      expect(e.message).to.contain("Try to import dotenv variable \"API_KEY\" which is not defined in any .env files.");
+    });
+  })
+
+  it('should load default env from .env with default values', function () {
+    var result = babel.transformFileSync('test/fixtures/default-values/source.js')
+    expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'abc123\');')
+  })
+
+  it('should load default env from .env with default value, and not error out', function () {
+    var result = babel.transformFileSync('test/fixtures/default-values/source-error.js')
+    expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'defaultValue\');')
+  })
+
   it('should load let .env.development overwrite .env', function(){
     var result = babel.transformFileSync('test/fixtures/dev-env/source.js')
     expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'abc123\');\nconsole.log(\'userdonthavename\');')

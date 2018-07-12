@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    "babel-plugin-transform-es2015-modules-commonjs",
+    [
+      "../../../",
+      {
+        "replacedModuleName": "babel-dotenv",
+        "matchPrefix": "RC_",
+        "matchSuffix": "_ENDPOINT",
+        "configDir": "test/fixtures/match-prefix-and-suffix"
+      }
+    ]
+  ]
+}
