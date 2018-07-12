@@ -103,11 +103,6 @@ module.exports = function (data) {
 
           config = dotEnvExpand({ parsed: config }).parsed;
 
-          fs.writeFileSync('/Users/sabinm/Desktop/dump', JSON.stringify({
-            config,
-            options,
-          }), 'utf-8');
-
           path.node.specifiers.forEach(function (specifier, idx) {
             if (specifier.type === "ImportDefaultSpecifier") {
               throw path.get('specifiers')[idx].buildCodeFrameError('Import dotenv as default is not supported.')
