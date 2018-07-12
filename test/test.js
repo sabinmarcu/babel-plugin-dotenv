@@ -115,6 +115,44 @@ describe('myself in some tests', function() {
     expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'defaultValue\');')
   })
 
+  it('should load default env from .env with process env simple', function () {
+    process.env['RC_API_KEY'] = 'defaultValue';
+    var result = babel.transformFileSync('test/fixtures/process-env-simple/source.js')
+    expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'abc123\');')
+    delete process.env['RC_API_KEY'];
+  })
+
+  it('should load default env from .env with process env simple, and not error out', function () {
+    process.env['RC_API_KEY'] = 'defaultValue';
+    var result = babel.transformFileSync('test/fixtures/process-env-simple/source-error.js')
+    expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'defaultValue\');')
+    delete process.env['RC_API_KEY'];
+  })
+
+  it('should load default env from .env with process env defaults', function () {
+    var result = babel.transformFileSync('test/fixtures/process-env-defaults/source.js')
+    expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'abc123\');')
+  })
+
+  it('should load default env from .env with process env defaults, and not error out', function () {
+    var result = babel.transformFileSync('test/fixtures/process-env-defaults/source-error.js')
+    expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'defaultValue\');')
+  })
+
+  it('should load default env from .env with process env exclusive', function () {
+    process.env['RC_API_KEY'] = 'defaultValue';
+    var result = babel.transformFileSync('test/fixtures/process-env-exclusive/source.js')
+    expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'abc123\');')
+    delete process.env['RC_API_KEY'];
+  })
+
+  it('should load default env from .env with process env exclusive, and not error out', function () {
+    process.env['RC_API_KEY'] = 'defaultValue';
+    var result = babel.transformFileSync('test/fixtures/process-env-exclusive/source-env.js')
+    expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'defaultValue\');')
+    delete process.env['RC_API_KEY'];
+  })
+
   it('should load let .env.development overwrite .env', function(){
     var result = babel.transformFileSync('test/fixtures/dev-env/source.js')
     expect(result.code).to.be('\'use strict\';\n\nconsole.log(\'abc123\');\nconsole.log(\'userdonthavename\');')

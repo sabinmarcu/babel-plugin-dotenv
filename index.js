@@ -31,6 +31,30 @@ module.exports = function (data) {
                   config = Object.assign(config, dotEnv.config({ path: sysPath.join(configDir, platformPath), silent: true }));
                   config = dotEnvExpand({ parsed: config }).parsed;
 
+                  if (options.includeProcessEnv) {
+                    var _cnf;
+                    if ((typeof(options.includeProcessEnv) === 'boolean') || (options.includeProcessEnv === "true")) {
+                      _cnf = process.env;
+                    } else {
+                      if (options.includeProcessEnv.splice) {
+                        _cnf = options.includeProcessEnv.reduce((prev, it) => ({
+                          ...prev,
+                          [it]: process.env[it]
+                        }), {});
+                      } else {
+                        _cnf = Object.keys(options.includeProcessEnv)
+                          .reduce((prev, it) => ({
+                            ...prev,
+                            [it]: process.env[it] || options.includeProcessEnv[it]
+                          }), {});
+                      }
+                    }
+                    config = {
+                      ..._cnf,
+                      ...config,
+                    }
+                  }
+
                   var _cnf = config, _tmp, _orig = config;
 
                   if (options.matchPrefix) {

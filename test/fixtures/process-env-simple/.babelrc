@@ -1,0 +1,13 @@
+{
+  "plugins": [
+    "babel-plugin-transform-es2015-modules-commonjs",
+    [
+      "../../../",
+      {
+        "replacedModuleName": "babel-dotenv",
+        "includeProcessEnv": true,
+        "configDir": "test/fixtures/process-env-simple"
+      }
+    ]
+  ]
+}

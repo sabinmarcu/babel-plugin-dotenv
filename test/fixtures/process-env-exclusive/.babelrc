@@ -1,0 +1,15 @@
+{
+  "plugins": [
+    "babel-plugin-transform-es2015-modules-commonjs",
+    [
+      "../../../",
+      {
+        "replacedModuleName": "babel-dotenv",
+        "includeProcessEnv": [
+          "RC_API_KEY"
+        ],
+        "configDir": "test/fixtures/process-env-exclusive"
+      }
+    ]
+  ]
+}
