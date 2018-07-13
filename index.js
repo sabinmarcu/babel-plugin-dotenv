@@ -87,11 +87,6 @@ module.exports = function (data) {
               ...config,
             };
 
-            fs.writeFileSync('/Users/sabinm/Desktop/dump2', JSON.stringify({
-              config,
-              options,
-              _cnf,
-            }), 'utf-8')
           }
 
           if (options.defaultValues) {
