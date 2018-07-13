@@ -101,7 +101,7 @@ module.exports = function (data) {
             };
           }
 
-          config = dotEnvExpand({ parsed: config }).parsed;
+          config = dotEnvExpand({ parsed: config }, { envFirst: false }).parsed;
 
           path.node.specifiers.forEach(function (specifier, idx) {
             if (specifier.type === "ImportDefaultSpecifier") {
