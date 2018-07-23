@@ -19,7 +19,7 @@ module.exports = function (data) {
         var configFile = options.filename ? options.filename : '.env';
 
         if (path.node.source.value === options.replacedModuleName) {
-          var babelEnv = process.env.BABEL_ENV;
+          var babelEnv = process.env.BABEL_ENV || process.env.NODE_ENV;
           var env = (!babelEnv || babelEnv === 'development') ? 'development' : 'production';
           var platformPath = configFile + '.' + env;
 
